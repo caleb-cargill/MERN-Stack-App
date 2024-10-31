@@ -15,6 +15,8 @@
     "express": "^4.21.0",
     "mongoose": "^8.6.3",
     "npm": "^10.8.3",
-    "npx": "^10.2.2"
+    "npx": "^10.2.2",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0"
   }
 }

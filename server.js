@@ -1,9 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+function generateToken(user) {
+    const payload = { userId: user._id, loginMethod: user.loginMethod };
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+  }
 
 app.use(cors());
 app.use(express.json());
@@ -17,6 +23,7 @@ mongoose.connect('mongodb://localhost/mern-stack-db', {
     console.error('MongoDB connection error:', err);
 });
 
+// Task schema
 const todoSchema = new mongoose.Schema({
     task: String, 
     completed: Boolean,

@@ -7,6 +7,17 @@ const App = () => {
   const [todos, setTodos] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentTodo, setCurrentTodo] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  async function login(email, password) {
+    const response = await axios.post('http://localhost:5000/login', { email, password });
+    const { token } = response.data;
+    localStorage.setItem('token', token);
+  }
+  
+  // Google login can be initiated by redirecting to '/auth/google' directly
+  window.location.href = 'http://localhost:5000/auth/google';
 
   useEffect(() => {
     // Fetch data from the Express server
