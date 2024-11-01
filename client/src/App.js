@@ -2,22 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TodoForm from './TodoForm';
 import './styles/App.css';
+import Register from './components/Register';
+import Login from './components/Login';
 
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentTodo, setCurrentTodo] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
-  async function login(email, password) {
-    const response = await axios.post('http://localhost:5000/login', { email, password });
-    const { token } = response.data;
-    localStorage.setItem('token', token);
-  }
-  
-  // Google login can be initiated by redirecting to '/auth/google' directly
-  window.location.href = 'http://localhost:5000/auth/google';
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setLoggedInUser(null);
+  };
 
   useEffect(() => {
     // Fetch data from the Express server
@@ -51,9 +48,16 @@ const App = () => {
     closeEditModal();
   };
 
-  return (
+
+
+  return loggedInUser 
+  ? (    
     <div className="container">
       <h1>MERN Stack Todo App</h1>
+      <div>
+        <p>Welcome {loggedInUser}</p>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
       <TodoForm onSave={addTodo} />
       <table>
         <thead>
@@ -86,6 +90,11 @@ const App = () => {
         </div>
       </div>
       )}
+    </div>
+  ) : (
+    <div>
+      <Register />
+      <Login setLoggedInUser={setLoggedInUser}/>
     </div>
   );
 };
