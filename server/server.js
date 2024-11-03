@@ -4,6 +4,7 @@ const cors = require('cors');
 const config = require('./config/config');
 const authRoutes = require('./routes/auth');
 const todoRoutes = require('./routes/todos');
+const googleAuthRoutes = require('./routes/googleAuth');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +23,7 @@ mongoose.connect(config.mongoURI, {
 
 // Define routes and middleware
 app.use('/api/auth', authRoutes);
+app.use('/api/auth', googleAuthRoutes);
 app.use('', todoRoutes);
 
 app.listen(PORT, () => {

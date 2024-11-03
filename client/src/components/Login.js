@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './style.css'; // Import CSS for styling
+import GoogleLogin from './GoogleLogin';
+import './style.css'; 
 
 const Login = ({ setLoggedInUser }) => {
     const [formData, setFormData] = useState({
@@ -54,6 +55,7 @@ const Login = ({ setLoggedInUser }) => {
                 <button type="submit">Login</button>
             </form>
             <p className="message">{message}</p>
+            <GoogleLogin />
         </div>
     );
 };
