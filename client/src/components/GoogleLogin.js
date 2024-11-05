@@ -10,7 +10,7 @@ const GoogleLogin = (props) => {
 			if (authResult["code"]) {
 				console.log(authResult.code);
 				const result = await googleAuth(authResult.code);
-				props.setUser(result.data.data.user);
+				props.setUser(result.data.data.user.email);
 				alert("successfuly logged in");
 			} else {
 				console.log(authResult);

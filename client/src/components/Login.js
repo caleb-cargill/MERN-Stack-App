@@ -55,7 +55,7 @@ const Login = ({ setLoggedInUser }) => {
                 <button type="submit">Login</button>
             </form>
             <p className="message">{message}</p>
-            <GoogleLogin />
+            <GoogleLogin setUser={setLoggedInUser}/>
         </div>
     );
 };

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import GoogleLogin from './GoogleLogin';
 import './style.css';
 
 const Register = () => {
@@ -18,7 +17,7 @@ const Register = () => {
     const onSubmit = async e => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/register', {
+            await axios.post('http://localhost:5000/api/auth/register', {
                 username,
                 email,
                 password
@@ -40,7 +39,6 @@ const Register = () => {
                 <button type="submit">Register</button>
             </form>
             <p className="message">{message}</p>
-            <GoogleLogin />
         </div>
     );
 };
