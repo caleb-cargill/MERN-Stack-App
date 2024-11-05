@@ -4,8 +4,10 @@ import TodoForm from './TodoForm';
 import './styles/App.css';
 import Register from './components/Register';
 import Login from './components/Login';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const App = () => {
+  require('dotenv').config();
   const [todos, setTodos] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentTodo, setCurrentTodo] = useState(null);
@@ -92,10 +94,12 @@ const App = () => {
       )}
     </div>
   ) : (
-    <div>
-      <Register />
-      <Login setLoggedInUser={setLoggedInUser}/>
-    </div>
+    <GoogleOAuthProvider clientId="126356443125-hjeefb6lg1qqri1lkrmokvnkmjl5rhhv.apps.googleusercontent.com">
+      <div>
+        <Register />
+        <Login setLoggedInUser={setLoggedInUser}/>
+      </div>
+    </GoogleOAuthProvider>
   );
 };
 
