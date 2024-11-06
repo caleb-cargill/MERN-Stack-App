@@ -10,7 +10,7 @@ This gave me an introduction to MongoDB, Express, React, and Node.js. From here,
  - [x] Allow Editing of Tasks
  - [x] Add Date and Status fields
  - [x] Add Traditional User Sign-In and Authentication
- - [ ] Add User Sign-In and Authentication with Google
+ - [x] Add User Sign-In and Authentication with Google
  - [ ] Add Settings Per User
  - [ ] Allow for Tasks to be assigned to Users
 

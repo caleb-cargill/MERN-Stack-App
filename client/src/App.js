@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import TodoForm from './TodoForm';
+import TodoForm from './components/TodoForm';
 import './styles/App.css';
 import Register from './components/Register';
 import Login from './components/Login';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import SettingsForm from './components/Settings';
 
 const App = () => {
   require('dotenv').config();
   const [todos, setTodos] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showEditTaskModal, setShowEditTaskModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [currentTodo, setCurrentTodo] = useState(null);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
@@ -37,18 +39,22 @@ const App = () => {
 
   const editTodo = (task) => {
     setCurrentTodo(task);
-    setShowModal(true);
+    setShowEditTaskModal(true);
   };
 
   const closeEditModal = () => {
     setCurrentTodo(null);
-    setShowModal(false);
+    setShowEditTaskModal(false);
   };
 
   const updateTodo = (updatedTodo) => {
     setTodos(todos.map(todo => (todo._id === updatedTodo._id ? updatedTodo : todo)));
     closeEditModal();
   };
+
+  const onSettingsChanged = (settings) => {
+    console.log("Settings Changed" + settings);
+  }
 
 
 
@@ -59,6 +65,7 @@ const App = () => {
       <div>
         <p>Welcome {loggedInUser}</p>
         <button onClick={handleLogout}>Logout</button>
+        <button onClick={() => setShowSettingsModal(true)}>Settings</button>
       </div>
       <TodoForm onSave={addTodo} />
       <table>
@@ -85,12 +92,20 @@ const App = () => {
         </tbody>
       </table>
 
-      {showModal && (
+      {showEditTaskModal && (
       <div className="modal-overlay">
         <div className="modal-content">
           <TodoForm existingTask={currentTodo} onSave={updateTodo} onClose={closeEditModal} />
         </div>
       </div>
+      )}
+
+      {showSettingsModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <SettingsForm user={loggedInUser} onSettingsChanged={onSettingsChanged}/>
+          </div>
+        </div>
       )}
     </div>
   ) : (
