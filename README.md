@@ -11,7 +11,8 @@ This gave me an introduction to MongoDB, Express, React, and Node.js. From here,
  - [x] Add Date and Status fields
  - [x] Add Traditional User Sign-In and Authentication
  - [x] Add User Sign-In and Authentication with Google
- - [x] Add Theme Settings
+ - [x] Add Theme Settings (Light vs Dark Mode)
  - [ ] Allow for Tasks to be assigned to Users
+ - [ ] Write Tests for Various Functionalities
 
  ## Lessons Learned
