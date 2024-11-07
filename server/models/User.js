@@ -6,10 +6,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String }, 
   googleId: { type: String }, 
   loginMethod: { type: String, enum: ['google', 'local'], required: true },
-  createdAt: { type: Date, default: Date.now },
-  settings: {
-    Theme: { type: String, enum: ['Light', 'Dark'], default: 'Light'}
-  }
+  createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('User', userSchema);
