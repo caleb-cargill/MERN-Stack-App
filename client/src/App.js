@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import SettingsForm from './components/Settings';
+import { SetTheme } from './utils/ThemeProvider';
 
 const App = () => {
   require('dotenv').config();
@@ -52,11 +53,7 @@ const App = () => {
     closeEditModal();
   };
 
-  const onSettingsChanged = (settings) => {
-    console.log("Settings Changed" + settings);
-  }
-
-
+  SetTheme();
 
   return loggedInUser 
   ? (    
@@ -103,7 +100,7 @@ const App = () => {
       {showSettingsModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <SettingsForm user={loggedInUser} onSettingsChanged={onSettingsChanged}/>
+            <SettingsForm onClose={() => setShowSettingsModal(false)}/>
           </div>
         </div>
       )}

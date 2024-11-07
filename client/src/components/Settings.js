@@ -1,18 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style.css';
+import { SetDark, SetLight, SetTheme, GetTheme } from '../utils/ThemeProvider';
 
-const SettingsForm = ({onSettingsChange: onSettingsChanged, user}) => { 
-    const toggleButton = () => 
-    {
-        const button = document.getElementById('toggleButton');
-        button.classList.toggle('active');
-        button.textContent = button.classList.contains('active') ? 'Dark' : 'Light';
-        user.settings.Theme = button.textContent;
-        onSettingsChanged(user.settings);
+const SettingsForm = ({ onClose }) => { 
+    
+    const toggleTheme = (isDarkModeChecked) => {
+        if (isDarkModeChecked) {
+            SetDark();
+        } else {
+            SetLight();
+        }
     };
 
+    const defaultDark = GetTheme();
+    SetTheme();
+    
     return (
-        <button id="toggleButton" className="toggle-btn" onClick={toggleButton}>Dark Mode</button>
+        <div className="toggle-theme-wrapper">
+        <span>Light</span>
+        <label className="toggle-theme" htmlFor="checkbox">
+          <input
+            type="checkbox"
+            id="checkbox"
+            defaultChecked={defaultDark}
+            onClick={() => toggleTheme(!defaultDark)}
+          />
+          <div className="slider round"></div>
+        </label>
+        <span>Dark</span>
+        <button onClick={onClose}>Close</button>
+      </div>
     );
 };
 
