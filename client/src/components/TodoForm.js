@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AssignUsers from './AssignUsers';
+import { GetTodaysDate } from '../utils/Utils';
 
 const TodoForm = ({ existingTask = null, onSave, onClose }) => {
-    const getTodaysDate = () => {
-        const today = new Date();
-        return today.toISOString().split('T')[0];
-    };
-
     const [name, setTask] = useState('');
-    const [date, setDate] = useState(getTodaysDate());
+    const [date, setDate] = useState(GetTodaysDate());
     const [completed, setCompleted] = useState(false);
-
+    const [assignedUserIds, setAssignedUserIds] = useState([]);
+    
     useEffect (() => {
         if (existingTask) {
             setTask(existingTask.task);
@@ -21,13 +19,13 @@ const TodoForm = ({ existingTask = null, onSave, onClose }) => {
     }, [existingTask]);
 
     const addTodo = async () => {
-        const response = await axios.post('http://localhost:5000/todos', { task: name, date, completed });
+        const response = await axios.post('http://localhost:5000/todos', { task: name, date, completed, assignedUsers: assignedUserIds });
         onSave(response.data);
         reset();
     };
 
     const saveTodo = async () => {
-        const response = await axios.put(`http://localhost:5000/todos/${existingTask._id}`, { task: name, date, completed });
+        const response = await axios.put(`http://localhost:5000/todos/${existingTask._id}`, { task: name, date, completed, assignedUsers: assignedUserIds });
         onSave(response.data);
     };
 
@@ -41,7 +39,7 @@ const TodoForm = ({ existingTask = null, onSave, onClose }) => {
 
     const reset = () => {
         setTask('');
-        setDate(getTodaysDate());
+        setDate(GetTodaysDate());
         setCompleted(false);
     };
 
@@ -58,6 +56,10 @@ const TodoForm = ({ existingTask = null, onSave, onClose }) => {
             console.error(error);
         }
       };
+
+    const handleUsersChange = (userIds) => {
+        setAssignedUserIds(userIds);
+    };
 
     return (
         <div>
@@ -76,6 +78,7 @@ const TodoForm = ({ existingTask = null, onSave, onClose }) => {
               <input type="checkbox" checked={completed} onChange={(e) => setCompleted(e.target.checked)} />
               Completed
             </label>
+            <AssignUsers onUsersChange={handleUsersChange}/>
             <button type="submit">{existingTask ? 'Save' : 'Add'}</button>
             <button type="button" onClick={cancelChanges}>{existingTask ? 'Close' : 'Clear'}</button>
           </form>
