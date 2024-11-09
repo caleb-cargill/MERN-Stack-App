@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import axios from 'axios';
+import './style.css';
 
 const AssignUsers = ({ onUsersChange }) => {
     const [selectedUsers, setSelectedUsers] = useState([]);
